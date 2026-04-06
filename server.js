@@ -142,7 +142,7 @@ async function handlePayJSRCheckout(req, res) {
 }
 
 function handlePayPalCheckout(req, res) {
-  const { amount, currency = 'USD', success_url, cancel_url, product_name } = req.query;
+  const { amount, currency = 'USD', success_url, cancel_url, product_name, display_title } = req.query;
   if (!amount || !success_url || !cancel_url) {
     return res.status(400).send('Missing required parameters');
   }
@@ -163,15 +163,32 @@ function handlePayPalCheckout(req, res) {
   const currencyRaw = String(currency || 'USD').toUpperCase();
   const currencyCode = /^[A-Z]{3}$/.test(currencyRaw) ? currencyRaw : 'USD';
   const paypalScriptUrl = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(paypalClientId)}&currency=${encodeURIComponent(currencyCode)}`;
-  const displayName = product_name || 'Digital Ebook';
-  const safeName = escapeForJs(displayName);
+  const paypalDescription = String(product_name || 'Digital Ebook').trim() || 'Digital Ebook';
+  const displayTitleRaw = String(display_title || '').trim();
+  const hasDisplayTitle = displayTitleRaw.length > 0;
+  const safeName = escapeForJs(paypalDescription);
   const safeSuccess = escapeForJs(success_url);
   const safeCancel = escapeForJs(cancel_url);
   const safeBrand = escapeForJs(SITE_NAME);
   const amountStr = amountNum.toFixed(2);
   const pageTitle = escapeHtml(`${SITE_NAME} · Checkout`);
   const htmlBrand = escapeHtml(SITE_NAME);
-  const htmlProduct = escapeHtml(String(displayName));
+  const htmlPaypalLabel = escapeHtml(paypalDescription);
+  const htmlProductFallback = htmlPaypalLabel;
+  const htmlRealTitle = hasDisplayTitle ? escapeHtml(displayTitleRaw) : '';
+  const orderBlock = hasDisplayTitle
+    ? `<p class="label">Your order</p>
+        <p class="product product-real">${htmlRealTitle}</p>
+        <div class="privacy-callout" role="status">
+          <strong>Privacy</strong>
+          <p class="privacy-p">PayPal only receives a generic description: <span class="paypal-label">“${htmlPaypalLabel}”</span>. Your PayPal receipt and card statement will <em>not</em> show the title above.</p>
+        </div>`
+    : `<p class="label">Your order</p>
+        <p class="product">${htmlProductFallback}</p>
+        <div class="privacy-callout" role="status">
+          <strong>Privacy</strong>
+          <p class="privacy-p">A generic description is sent to PayPal so your receipt and bank statement stay discreet.</p>
+        </div>`;
 
   return res.send(`<!DOCTYPE html>
 <html lang="en">
@@ -269,6 +286,32 @@ function handlePayPalCheckout(req, res) {
       margin-bottom: 0.3rem;
     }
     .product { font-size: 0.9rem; color: var(--text); line-height: 1.45; margin-bottom: 0.8rem; opacity: 0.93; }
+    .product-real { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.45rem !important; }
+    .privacy-callout {
+      font-size: 0.72rem;
+      line-height: 1.5;
+      color: var(--muted2);
+      background: rgba(0, 229, 255, 0.06);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 12px;
+      padding: 0.7rem 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+    .privacy-callout strong {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .privacy-p { margin: 0; }
+    .paypal-label {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--muted);
+      word-break: break-word;
+    }
     .amount {
       font-size: 2.1rem;
       font-weight: 800;
@@ -320,8 +363,7 @@ function handlePayPalCheckout(req, res) {
         <h1 class="brand">${htmlBrand}</h1>
         <p class="badge"><span aria-hidden="true">🔒</span> Encrypted session · PayPal secure payment</p>
         <div class="divider" aria-hidden="true"></div>
-        <p class="label">Your order</p>
-        <p class="product">${htmlProduct}</p>
+        ${orderBlock}
         <p class="amount"><span class="cur-symbol">$</span>${amountStr}<span class="cur-code">${escapeHtml(currencyCode)}</span></p>
         <div class="pp-wrap">
           <p class="pp-label">Pay with PayPal or card</p>
