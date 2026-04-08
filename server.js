@@ -478,10 +478,10 @@ app.get('/api/payjsr-success', (req, res) => {
       var sep = hasQuery ? '&' : '?';
 
       if (paymentId) {
-        window.location.href = forwardUrl + sep + 'order_id=' + encodeURIComponent(paymentId);
+        window.location.replace(forwardUrl + sep + 'order_id=' + encodeURIComponent(paymentId));
       } else {
         // If we lost sessionStorage for some reason, still forward.
-        window.location.href = forwardUrl;
+        window.location.replace(forwardUrl);
       }
     })();
   </script>

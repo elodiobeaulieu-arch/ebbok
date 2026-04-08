@@ -756,7 +756,7 @@
         ].filter(Boolean).join('\n');
         var tgUrl = 'https://t.me/' + user + '?text=' + encodeURIComponent(lines);
         document.getElementById('telegram-btn').href = tgUrl;
-        setTimeout(function () { window.location.href = tgUrl; }, 3000);
+        setTimeout(function () { window.location.replace(tgUrl); }, 3000);
       }
 
       /* ── Mostra success page ou banner ── */
