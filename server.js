@@ -88,7 +88,7 @@ async function handlePayJSRCheckout(req, res) {
     metadata: { product_name: String(displayName) },
   };
 
-  const createRes = await fetch('https://api.payjsr.com/v1/api-create-payment', {
+  let createRes = await fetch('https://api.payjsr.com/v1/payments', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -96,6 +96,16 @@ async function handlePayJSRCheckout(req, res) {
     },
     body: JSON.stringify(payload),
   });
+  if (!createRes.ok && createRes.status === 404) {
+    createRes = await fetch('https://api.payjsr.com/v1/api-create-payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': payjsrSecretKey,
+      },
+      body: JSON.stringify(payload),
+    });
+  }
 
   const createData = await createRes.json().catch(() => ({}));
   if (!createRes.ok) {
@@ -104,41 +114,21 @@ async function handlePayJSRCheckout(req, res) {
       .send(`Checkout failed (PayJSR): ${createData?.error || createData?.message || 'unknown error'}`);
   }
 
-  const paymentId = createData?.data?.payment_id || createData?.data?.paymentId || createData?.payment_id;
+  const normalized = createData?.data || createData || {};
+  const paymentId = normalized?.payment_id || normalized?.paymentId || normalized?.session_id || normalized?.id;
+  const checkoutUrl =
+    normalized?.checkout_url ||
+    normalized?.payment_link ||
+    normalized?.payment_url ||
+    normalized?.url;
   if (!paymentId) {
     return res.status(502).send('Checkout failed (PayJSR): missing payment_id');
   }
+  if (!checkoutUrl) {
+    return res.status(502).send('Checkout failed (PayJSR): missing checkout/payment link');
+  }
 
-  const safePaymentId = escapeForJs(paymentId);
-  const safeSiteName = escapeForJs(SITE_NAME);
-
-  return res.send(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Referrer-Policy" content="no-referrer">
-  <title>Checkout - ${safeSiteName}</title>
-  <script src="https://js.payjsr.com/v1/payjsr.js"></script>
-</head>
-<body>
-  <script>
-    (function () {
-      try { sessionStorage.setItem('payjsr_payment_id', '${safePaymentId}'); } catch (e) {}
-      if (typeof PayJSR !== 'undefined' && PayJSR.openCheckout) {
-        PayJSR.openCheckout('${safePaymentId}');
-      } else {
-        setTimeout(function () {
-          if (typeof PayJSR !== 'undefined' && PayJSR.openCheckout) PayJSR.openCheckout('${safePaymentId}');
-        }, 300);
-      }
-    })();
-  </script>
-</body>
-</html>
-  `);
+  return res.redirect(303, String(checkoutUrl));
 }
 
 function handlePayPalCheckout(req, res) {
@@ -450,6 +440,9 @@ app.get('/api/payjsr-checkout', async (req, res) => {
 app.get('/api/payjsr-success', (req, res) => {
   try {
     const forward = String(req.query.forward || '');
+    const paymentId = String(
+      req.query.payment_id || req.query.order_id || req.query.pid || req.query.paymentId || ''
+    );
     if (!forward) {
       return res.status(400).send('Missing forward URL');
     }
@@ -471,16 +464,12 @@ app.get('/api/payjsr-success', (req, res) => {
   <script>
     (function () {
       var forwardUrl = ${JSON.stringify(forward)};
-      var paymentId = null;
-      try { paymentId = sessionStorage.getItem('payjsr_payment_id'); } catch (e) {}
-
+      var paymentId = ${JSON.stringify(paymentId)};
       var hasQuery = forwardUrl.indexOf('?') >= 0;
       var sep = hasQuery ? '&' : '?';
-
       if (paymentId) {
         window.location.replace(forwardUrl + sep + 'order_id=' + encodeURIComponent(paymentId));
       } else {
-        // If we lost sessionStorage for some reason, still forward.
         window.location.replace(forwardUrl);
       }
     })();
