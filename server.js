@@ -49,9 +49,17 @@ const applyCommonHeaders = (res) => {
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
 };
 
+const getEbooksReturnUrl = (origin, status, productName, amount) => {
+  const params = new URLSearchParams();
+  params.set('status', status);
+  if (productName) params.set('product_name', String(productName));
+  if (amount !== undefined && amount !== null && amount !== '') params.set('amount', String(amount));
+  return `${origin}/?${params.toString()}`;
+};
+
 async function handlePayJSRCheckout(req, res) {
-  const { amount, currency = 'USD', success_url, cancel_url, product_name } = req.query;
-  if (!amount || !success_url || !cancel_url) {
+  const { amount, currency = 'USD', product_name } = req.query;
+  if (!amount) {
     return res.status(400).send('Missing required parameters');
   }
 
@@ -74,7 +82,8 @@ async function handlePayJSRCheckout(req, res) {
 
   const displayName = product_name || 'Digital Ebook';
   const origin = `${req.protocol}://${req.get('host')}`;
-  const forwardSuccess = String(success_url);
+  const forwardSuccess = getEbooksReturnUrl(origin, 'success', displayName, amountNumber.toFixed(2));
+  const cancelReturn = getEbooksReturnUrl(origin, 'cancel', displayName, amountNumber.toFixed(2));
   const successIntermediate = `${origin}/api/payjsr-success?forward=${encodeURIComponent(forwardSuccess)}`;
 
   const payload = {
@@ -84,7 +93,7 @@ async function handlePayJSRCheckout(req, res) {
     billing_type: 'one_time',
     mode: 'redirect',
     success_url: successIntermediate,
-    cancel_url: String(cancel_url),
+    cancel_url: cancelReturn,
     metadata: { product_name: String(displayName) },
   };
 

@@ -114,6 +114,18 @@
       gap: 0.35rem;
     }
     .trust-item svg { width: 15px; height: 15px; fill: var(--accent2); }
+    .checkout-note {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: #a6b3ff;
+      background: rgba(108, 99, 255, 0.1);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
 
     /* ─── SUCCESS BANNER ─── */
     #status-banner {
@@ -294,6 +306,12 @@
     .btn-pay:active { transform: translateY(0); }
     .btn-pay .pp-logo { font-weight: 800; }
     .btn-pay .pp-logo span { color: #ffb300; }
+    .checkout-sub {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+    }
 
     /* ─── TRUST SECTION ─── */
     .trust-section {
@@ -409,7 +427,7 @@
     <section class="hero">
       <div class="hero-tag">✦ Instant Digital Download</div>
       <h1>Premium Ebooks for <em>Real Results</em></h1>
-      <p>Hand-picked guides on business, money, mindset & more. Download instantly after payment.</p>
+      <p>Curated digital books on business, money, mindset and productivity. Secure checkout and instant access after payment confirmation.</p>
       <div class="trust-row">
         <div class="trust-item">
           <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
@@ -428,6 +446,7 @@
           24/7 Support
         </div>
       </div>
+      <p class="checkout-note">🔐 Verified provider: PayJSR • Card & wallet payments</p>
     </section>
 
     <!-- STATUS BANNER -->
@@ -439,9 +458,159 @@
     <section class="catalog">
       <div class="catalog-header">
         <h2>Best Sellers</h2>
-        <span>10 titles • Updated 2025</span>
+        <span>16 titles • Updated 2026</span>
       </div>
       <div class="grid">
+
+        <div class="card" data-name="30-Day Weight Loss Recipes" data-price="39">
+          <div class="card-cover">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=600&fit=crop&auto=format" alt="Weight Loss Recipes" loading="lazy">
+            <span class="card-cover-badge new">New</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Weight Loss</div>
+            <div class="card-title">30-Day Weight Loss Recipes</div>
+            <div class="card-author">by Emma Carter</div>
+            <div class="stars">
+              <span class="s">★★★★★</span>
+              <span class="count">(1,126)</span>
+            </div>
+            <div class="card-desc">A complete 30-day fat-loss meal plan with high-protein, low-calorie recipes for fast and sustainable results.</div>
+            <div class="card-footer">
+              <div><span class="price">$39</span><span class="price-old">$79</span></div>
+              <span class="format-badge">PDF + EPUB</span>
+            </div>
+            <button class="btn-pay paypal-button" data-method="payjsr">
+              <span>Secure Checkout</span>
+            </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
+          </div>
+        </div>
+
+        <div class="card" data-name="Keto Fat Burn Cookbook" data-price="42">
+          <div class="card-cover">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=600&fit=crop&auto=format" alt="Keto Cookbook" loading="lazy">
+            <span class="card-cover-badge">Top Rated</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Nutrition</div>
+            <div class="card-title">Keto Fat Burn Cookbook</div>
+            <div class="card-author">by Daniel Rhodes</div>
+            <div class="stars">
+              <span class="s">★★★★★</span>
+              <span class="count">(842)</span>
+            </div>
+            <div class="card-desc">120 keto-friendly recipes with shopping lists, macros and weekly meal prep for faster fat loss.</div>
+            <div class="card-footer">
+              <div><span class="price">$42</span><span class="price-old">$84</span></div>
+              <span class="format-badge">PDF + EPUB</span>
+            </div>
+            <button class="btn-pay paypal-button" data-method="payjsr">
+              <span>Secure Checkout</span>
+            </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
+          </div>
+        </div>
+
+        <div class="card" data-name="Male Enhancement Blueprint" data-price="49">
+          <div class="card-cover">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=600&fit=crop&auto=format" alt="Male Enhancement Guide" loading="lazy">
+            <span class="card-cover-badge">Bestseller</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Men's Health</div>
+            <div class="card-title">Male Enhancement Blueprint</div>
+            <div class="card-author">by Michael Grant</div>
+            <div class="stars">
+              <span class="s">★★★★</span>★
+              <span class="count">(1,904)</span>
+            </div>
+            <div class="card-desc">Natural training methods, routines and recovery protocols focused on male confidence and performance.</div>
+            <div class="card-footer">
+              <div><span class="price">$49</span><span class="price-old">$99</span></div>
+              <span class="format-badge">PDF + EPUB</span>
+            </div>
+            <button class="btn-pay paypal-button" data-method="payjsr">
+              <span>Secure Checkout</span>
+            </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
+          </div>
+        </div>
+
+        <div class="card" data-name="Penis Enlargement Protocol" data-price="55">
+          <div class="card-cover">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop&auto=format" alt="Penis Enlargement Protocol" loading="lazy">
+            <span class="card-cover-badge new">New</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Men's Wellness</div>
+            <div class="card-title">Penis Enlargement Protocol</div>
+            <div class="card-author">by Dr. Kevin Miles</div>
+            <div class="stars">
+              <span class="s">★★★★</span>★
+              <span class="count">(1,117)</span>
+            </div>
+            <div class="card-desc">Step-by-step routines, safety guidelines and progress tracking focused on non-surgical enlargement strategies.</div>
+            <div class="card-footer">
+              <div><span class="price">$55</span><span class="price-old">$109</span></div>
+              <span class="format-badge">PDF + EPUB</span>
+            </div>
+            <button class="btn-pay paypal-button" data-method="payjsr">
+              <span>Secure Checkout</span>
+            </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
+          </div>
+        </div>
+
+        <div class="card" data-name="Healthy Air Fryer Recipes" data-price="33">
+          <div class="card-cover">
+            <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=600&fit=crop&auto=format" alt="Air Fryer Recipes" loading="lazy">
+            <span class="card-cover-badge">Top Rated</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Cooking</div>
+            <div class="card-title">Healthy Air Fryer Recipes</div>
+            <div class="card-author">by Olivia Bennett</div>
+            <div class="stars">
+              <span class="s">★★★★★</span>
+              <span class="count">(2,012)</span>
+            </div>
+            <div class="card-desc">Quick and healthy air fryer meals for breakfast, lunch and dinner with easy ingredients and fast prep.</div>
+            <div class="card-footer">
+              <div><span class="price">$33</span><span class="price-old">$69</span></div>
+              <span class="format-badge">PDF + EPUB</span>
+            </div>
+            <button class="btn-pay paypal-button" data-method="payjsr">
+              <span>Secure Checkout</span>
+            </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
+          </div>
+        </div>
+
+        <div class="card" data-name="Family Comfort Food Recipes" data-price="36">
+          <div class="card-cover">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=600&fit=crop&auto=format" alt="Family Comfort Food Recipes" loading="lazy">
+            <span class="card-cover-badge">Bestseller</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Cooking</div>
+            <div class="card-title">Family Comfort Food Recipes</div>
+            <div class="card-author">by Rachel Monroe</div>
+            <div class="stars">
+              <span class="s">★★★★★</span>
+              <span class="count">(1,633)</span>
+            </div>
+            <div class="card-desc">Classic homemade recipes with modern twists, perfect for family dinners, gatherings and weekend meals.</div>
+            <div class="card-footer">
+              <div><span class="price">$36</span><span class="price-old">$74</span></div>
+              <span class="format-badge">PDF + EPUB</span>
+            </div>
+            <button class="btn-pay paypal-button" data-method="payjsr">
+              <span>Secure Checkout</span>
+            </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
+          </div>
+        </div>
 
         <div class="card" data-name="Personal Development Ebook" data-price="25">
           <div class="card-cover">
@@ -462,8 +631,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -486,8 +656,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -510,8 +681,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -534,8 +706,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -558,8 +731,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -582,8 +756,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -606,8 +781,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -630,8 +806,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -654,8 +831,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -678,8 +856,9 @@
               <span class="format-badge">PDF + EPUB</span>
             </div>
             <button class="btn-pay paypal-button" data-method="payjsr">
-              <span>Buy here</span>
+              <span>Secure Checkout</span>
             </button>
+            <div class="checkout-sub">Encrypted payment processed by PayJSR</div>
           </div>
         </div>
 
@@ -722,7 +901,7 @@
 
     <footer>
       © 2025 {{SITE_NAME}} · Digital Products · All Rights Reserved<br>
-      <span style="font-size:0.72rem">Payments are processed securely via PayJSR. Your purchase will appear as a digital content transaction.</span>
+      <span style="font-size:0.72rem">Payments are encrypted and processed by PayJSR. Access details are delivered after successful confirmation.</span>
     </footer>
   </div>
 
@@ -777,18 +956,18 @@
       }
 
       /* ── Constrói URL do checkout ── */
-      function buildCheckoutUrl(price, name, method) {
+      function buildCheckoutUrl(price, name, method, displayTitle) {
         var origin = window.location.origin;
-        var path = window.location.pathname || '/';
-        var base = origin + path;
+        var base = origin + '/';
         var successUrl = base + '?status=success&product_name=' + encodeURIComponent(name) + '&amount=' + encodeURIComponent(String(price));
-        var cancelUrl = 'https://www.google.com/';
+        var cancelUrl = base + '?status=cancel';
         var p = new URLSearchParams();
         p.set('amount', String(price));
         p.set('currency', 'USD');
         p.set('success_url', successUrl);
         p.set('cancel_url', cancelUrl);
         p.set('product_name', name);
+        p.set('display_title', displayTitle || name);
         p.set('method', method || 'paypal');
         return '/api/paypal-checkout?' + p.toString();
       }
@@ -799,11 +978,14 @@
           var btn = card.querySelector('.paypal-button');
           if (!btn) return;
           btn.addEventListener('click', function () {
-            var name = card.getAttribute('data-name') || 'Digital Ebook';
+            var titleNode = card.querySelector('.card-title');
+            var titleName = titleNode ? String(titleNode.textContent || '').trim() : '';
+            var fallbackName = card.getAttribute('data-name') || 'Digital Ebook';
+            var name = titleName || fallbackName;
             var price = card.getAttribute('data-price');
             var method = (btn.getAttribute('data-method') || 'payjsr').toLowerCase();
             if (!price) return;
-            window.location.href = buildCheckoutUrl(price, name, method);
+            window.location.href = buildCheckoutUrl(price, name, method, titleName || fallbackName);
           });
         });
       }
